@@ -3,6 +3,8 @@ package com.cescdev.crud_fullstack_angular.controller;
 import com.cescdev.crud_fullstack_angular.entity.Customer;
 import com.cescdev.crud_fullstack_angular.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class CustomerController {
 
     //http://localhost:8080/api/customers
     @PostMapping
-    public Customer save(@RequestBody Customer customer){
+    public Customer save(@RequestBody @Valid Customer customer){
         return customerService.save(customer);
     }
 
@@ -47,7 +49,7 @@ public class CustomerController {
 
     //http://localhost:8080/api/customers
     @PutMapping
-    public Customer updateCustomer(@RequestBody Customer customer){
+    public Customer updateCustomer(@RequestBody @Valid Customer customer){
         Customer customerDb = customerService.findById(customer.getId());
         customerDb.setFirstName(customer.getFirstName());
         customerDb.setLastName(customer.getLastName());

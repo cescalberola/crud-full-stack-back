@@ -1,6 +1,9 @@
 package com.cescdev.crud_fullstack_angular.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "customers")
@@ -8,10 +11,19 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String  firstName;
-    private String  lastName;
+
+    @NotBlank(message = "El nombre no puede estar vacío")
+    @Size(max = 50, message = "El nombre no puede tener más de 50 caracteres")
+    private String firstName;
+
+    @NotBlank(message = "El apellido no puede estar vacío")
+    @Size(max = 50, message = "El apellido no puede tener más de 50 caracteres")
+    private String lastName;
+
+    @NotBlank(message = "El email no puede estar vacío")
+    @Email(message = "El formato del email no es válido")
     @Column(unique = true, nullable = false)
-    private String  email;
+    private String email;
 
     public Customer() {
     }
