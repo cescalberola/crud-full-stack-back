@@ -4,6 +4,9 @@ import com.cescdev.crud_fullstack_angular.entity.Customer;
 import com.cescdev.crud_fullstack_angular.exception.ResourceNotFoundException;
 import com.cescdev.crud_fullstack_angular.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 import java.util.List;
 
@@ -22,8 +25,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> findAll() {
-        return customerRepository.findAll();
+    public Page<Customer> findAll(Pageable pageable) {
+        return customerRepository.findAll(pageable);
     }
 
     @Override
@@ -43,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> findByName(String name) {
-        return customerRepository.findByFirstNameContainingIgnoreCase(name);
+    public Page<Customer> search(String keyword, Pageable pageable) {
+        return customerRepository.search(keyword, pageable);
     }
 }

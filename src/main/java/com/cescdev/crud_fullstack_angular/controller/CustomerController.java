@@ -4,6 +4,9 @@ import com.cescdev.crud_fullstack_angular.entity.Customer;
 import com.cescdev.crud_fullstack_angular.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 
 import java.util.List;
@@ -28,12 +31,16 @@ public class CustomerController {
 
     //http://localhost:8080
     @GetMapping
-    public List<Customer> findAll(@RequestParam(required = false) String name) {
+    public Page<Customer> findAll(
+            @RequestParam(required = false) String name,
+            @PageableDefault(size = 5) Pageable pageable
+    ) {
         if (name != null && !name.isEmpty()) {
-            return customerService.findByName(name); // 🔍
+            return customerService.search(name, pageable);
         }
-        return customerService.findAll();
+        return customerService.findAll(pageable);
     }
+
 
     //http://localhost:8080/api/customers/:id
     @GetMapping("/{id}")
