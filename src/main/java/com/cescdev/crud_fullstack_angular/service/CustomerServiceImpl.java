@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+import static com.cescdev.crud_fullstack_angular.service.CustomerSpecifications.containsKeywordInFields;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
@@ -47,6 +49,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Page<Customer> search(String keyword, Pageable pageable) {
-        return customerRepository.search(keyword, pageable);
+        return customerRepository.findAll(
+                containsKeywordInFields(keyword),
+                pageable
+        );
     }
 }
