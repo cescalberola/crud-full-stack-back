@@ -13,13 +13,13 @@ public class CustomerSpecifications {
 
     public static Specification<Customer> containsKeywordInFields(String keyword) {
         return (root, query, cb) -> {
-            // 1) Sin palabra clave => no filtro
+            // Sin palabra clave => no filtro
             if (keyword == null || keyword.isBlank()) {
                 // Sin filtro: devuelve siempre true
                 return cb.conjunction(); // WHERE 1 = 1
             }
 
-            // 2) Preparo el patrón para LIKE en minúsculas
+            // Preparo el patrón para LIKE en minúsculas
             String likePattern = "%" + keyword.toLowerCase() + "%";
 
             /**
@@ -42,7 +42,7 @@ public class CustomerSpecifications {
             Combina varios Predicate en (...) OR (...) OR (...).
             */
 
-            // 3) Creo los Predicates para cada campo
+            // Creo los Predicates para cada campo
             Predicate firstNameMatch =
                     cb.like(cb.lower(root.get("firstName")), likePattern);
             Predicate lastNameMatch  =
